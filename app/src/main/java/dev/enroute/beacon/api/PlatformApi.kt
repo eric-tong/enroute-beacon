@@ -1,6 +1,6 @@
-package com.example.enroute.beacon.api
+package dev.enroute.beacon.api
 
-import com.example.enroute.beacon.model.Location
+import dev.enroute.beacon.model.Location
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.example.enroute.beacon.helper
+package dev.enroute.beacon.helper
 
 import retrofit2.Call
 import retrofit2.Callback

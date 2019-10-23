@@ -1,11 +1,12 @@
-package com.example.enroute.beacon
+package dev.enroute.beacon
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.enroute.beacon.api.PlatformApi
-import com.example.enroute.beacon.helper.enqueue
-import com.example.enroute.beacon.helper.Result
+import com.example.enroute.beacon.R
+import dev.enroute.beacon.api.PlatformApi
+import dev.enroute.beacon.helper.enqueue
+import dev.enroute.beacon.helper.Result
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

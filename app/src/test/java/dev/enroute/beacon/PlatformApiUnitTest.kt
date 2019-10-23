@@ -1,6 +1,6 @@
-package com.example.enroute.beacon
+package dev.enroute.beacon
 
-import com.example.enroute.beacon.api.PlatformApi
+import dev.enroute.beacon.api.PlatformApi
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test

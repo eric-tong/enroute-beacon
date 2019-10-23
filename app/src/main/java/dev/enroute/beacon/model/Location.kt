@@ -1,4 +1,4 @@
-package com.example.enroute.beacon.model
+package dev.enroute.beacon.model
 
 import java.sql.Timestamp
 
