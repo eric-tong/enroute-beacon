@@ -1,5 +1,6 @@
 package com.example.enroute.beacon
 
+import com.example.enroute.beacon.api.EnRoutePlatform
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory.create
