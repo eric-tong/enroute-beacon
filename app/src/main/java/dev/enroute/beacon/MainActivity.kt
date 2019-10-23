@@ -44,10 +44,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 11
             )
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0F, this)
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 900000, 5F, this)
     }
 
     override fun onLocationChanged(location: Location?) {
+        Log.d("Location", "Location put")
         service.putLocation(location!!.latitude, location.longitude).enqueue { result ->
             when (result) {
                 is Result.Success -> {
