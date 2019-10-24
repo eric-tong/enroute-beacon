@@ -16,12 +16,10 @@ class Scheduler(context: Context) {
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun start(context: Context) {
-        val interval = 60000L
-
         manager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis(),
-            interval,
+            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
             pendingIntent
         )
         Toast.makeText(context, "Alarm Set", Toast.LENGTH_SHORT).show()
@@ -31,23 +29,23 @@ class Scheduler(context: Context) {
     fun stop(context: Context) {
         manager.cancel(pendingIntent)
         Toast.makeText(context, "Alarm Canceled", Toast.LENGTH_SHORT).show()
-        Timber.e("Alarm Canceled")
+        Timber.d("Alarm Canceled")
     }
 }
 
 class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Timber.e("Alarm Run")
+        Timber.d("Alarm Run")
         val platformService = PlatformService()
         val locationHelper =
             LocationHelper(context!!) { deviceLocation ->
-                Timber.e(deviceLocation.toString())
+                Timber.d(deviceLocation.toString())
                 platformService.onLocationChanged(
                     deviceLocation
                 ) { locations ->
                     val lastLocation = locations.last()
                     Toast.makeText(context, lastLocation.toString(), Toast.LENGTH_SHORT).show()
-                    Timber.e(lastLocation.toString())
+                    Timber.d(lastLocation.toString())
                 }
             }
         locationHelper.fetchLocationOnce()
