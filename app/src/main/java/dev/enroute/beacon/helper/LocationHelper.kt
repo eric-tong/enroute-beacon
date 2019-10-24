@@ -8,7 +8,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
+import timber.log.Timber
 
 class LocationHelper
     (private val context: Context, private val onLocationChanged: (Location) -> (Unit)) {
@@ -22,20 +22,20 @@ class LocationHelper
     init {
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
-                Log.d("Location Changes", location.toString())
+                Timber.d(location.toString())
                 onLocationChanged.invoke(location)
             }
 
             override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-                Log.d("Status Changed", status.toString())
+                Timber.d(status.toString())
             }
 
             override fun onProviderEnabled(provider: String) {
-                Log.d("Provider Enabled", provider)
+                Timber.d(provider)
             }
 
             override fun onProviderDisabled(provider: String) {
-                Log.d("Provider Disabled", provider)
+                Timber.d(provider)
             }
         }
 
@@ -51,9 +51,10 @@ class LocationHelper
 
     @SuppressLint("MissingPermission")
     fun fetchLocationOnce() {
-        if (hasLocationPermissions(context))
+        if (hasLocationPermissions(context)) {
             locationManager.requestSingleUpdate(criteria, locationListener!!, looper)
-        else
-            Log.e("LocationHelper", "No relevant permission")
+        } else {
+            Timber.e("Missing location permissions")
+        }
     }
 }
