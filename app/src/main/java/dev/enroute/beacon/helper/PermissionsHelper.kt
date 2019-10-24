@@ -12,7 +12,7 @@ val PERMISSIONS = arrayOf(
 )
 
 fun hasLocationPermissions(context: Context): Boolean {
-    return PERMISSIONS.all { context.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
+    return PERMISSIONS.all { context.checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED }
 }
 
 fun requestLocationPermissions(activity: Activity) {

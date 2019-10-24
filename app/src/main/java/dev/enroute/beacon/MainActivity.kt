@@ -3,8 +3,6 @@ package dev.enroute.beacon
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.enroute.beacon.R
-import dev.enroute.beacon.api.PlatformService
-import dev.enroute.beacon.helper.LocationHelper
 import dev.enroute.beacon.helper.Scheduler
 import dev.enroute.beacon.helper.hasLocationPermissions
 import dev.enroute.beacon.helper.requestLocationPermissions
@@ -15,27 +13,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val scheduler = Scheduler(this)
 
         if (!hasLocationPermissions(this)) requestLocationPermissions(this)
 
-        val platformService = PlatformService()
-        val locationHelper =
-            LocationHelper(this) { deviceLocation ->
-                platformService.onLocationChanged(
-                    deviceLocation
-                ) { location -> helloWorld.text = location.toString() }
-            }
-
-        val scheduler = Scheduler(this)
-
-
         startButton.setOnClickListener {
-            // locationHelper.fetchLocationOnce()
             scheduler.start(this)
         }
-
         endButton.setOnClickListener {
-            // locationHelper.fetchLocationOnce()
             scheduler.stop(this)
         }
     }

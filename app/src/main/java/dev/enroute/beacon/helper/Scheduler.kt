@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import dev.enroute.beacon.api.PlatformService
 
 class Scheduler(context: Context) {
     private val pendingIntent: PendingIntent =
@@ -36,7 +37,19 @@ class Scheduler(context: Context) {
 
 class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show()
         Log.e("Scheduler", "Alarm Run")
+        val platformService = PlatformService()
+        val locationHelper =
+            LocationHelper(context!!) { deviceLocation ->
+                Log.e("Scheduler", deviceLocation.toString())
+                platformService.onLocationChanged(
+                    deviceLocation
+                ) { locations ->
+                    val lastLocation = locations.last()
+                    Toast.makeText(context, lastLocation.toString(), Toast.LENGTH_SHORT).show()
+                    Log.e("Scheduler", lastLocation.toString())
+                }
+            }
+        locationHelper.fetchLocationOnce()
     }
 }

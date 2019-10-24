@@ -53,5 +53,7 @@ class LocationHelper
     fun fetchLocationOnce() {
         if (hasLocationPermissions(context))
             locationManager.requestSingleUpdate(criteria, locationListener!!, looper)
+        else
+            Log.e("LocationHelper", "No relevant permission")
     }
 }
