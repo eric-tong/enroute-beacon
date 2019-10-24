@@ -2,7 +2,7 @@ package dev.enroute.beacon.api
 
 import dev.enroute.beacon.helper.Result
 import dev.enroute.beacon.helper.enqueue
-import dev.enroute.beacon.model.Location
+import dev.enroute.beacon.api.model.LocationEntry
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
@@ -15,7 +15,7 @@ class PlatformService {
         .build()
         .create<PlatformApi>(PlatformApi::class.java)
 
-    fun onLocationChanged(location: DeviceLocation?, callback: (List<Location>) -> (Unit)) {
+    fun onLocationChanged(location: DeviceLocation?, callback: (List<LocationEntry>) -> (Unit)) {
         Timber.d("onLocationChanged Called")
         service.putLocation(location!!.latitude, location.longitude).enqueue { result ->
             when (result) {

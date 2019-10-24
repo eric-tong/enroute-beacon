@@ -19,7 +19,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         android:fullBackupContent="@xml/backup_descriptor">
 
-        <receiver android:name="dev.enroute.beacon.helper.Receiver" />
+        <receiver android:name="dev.enroute.beacon.dispatcher.LocationDispatchIntentReceiver" />
 
         <activity android:name="dev.enroute.beacon.MainActivity">
             <intent-filter>
