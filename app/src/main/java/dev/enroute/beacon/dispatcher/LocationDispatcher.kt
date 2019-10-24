@@ -22,29 +22,26 @@ val criteria: Criteria = Criteria().apply {
     verticalAccuracy = Criteria.ACCURACY_HIGH
 }
 
-class LocationDispatcher
-    (private val context: Context) {
+class LocationDispatcher(private val context: Context) {
 
-    private var locationManager: LocationManager =
+    private val locationManager: LocationManager =
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private val locationReadyListener = LocationReadyListener { onLocationReady(it) }
 
     @SuppressLint("MissingPermission")
     fun dispatch() {
         if (hasLocationPermissions(context)) {
-            locationManager.requestSingleUpdate(
-                criteria,
-                LocationReadyListener { onLocationReady(it) },
-                null
-            )
+            locationManager.requestSingleUpdate(criteria, locationReadyListener, null)
         } else {
             Timber.e("Missing location permissions")
         }
     }
-    
+
     private fun onLocationReady(location: Location) {
         platformApiService.putLocation(location.latitude, location.longitude).enqueue { result ->
             when (result) {
                 is Result.Success -> {
+                    Timber.i("Dispatch complete %s", result.response.body()!!.last())
                 }
                 is Result.Failure -> {
                 }
