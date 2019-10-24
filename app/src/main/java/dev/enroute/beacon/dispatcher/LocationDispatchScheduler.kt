@@ -2,6 +2,7 @@ package dev.enroute.beacon.dispatcher
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
@@ -27,14 +28,20 @@ class LocationDispatchScheduler(context: Context) {
         )
 
         Toast.makeText(context, "Alarm Set", Toast.LENGTH_SHORT).show()
-        Timber.d("Alarm Set")
+        Timber.i("Dispatch scheduled")
     }
 
     fun stop(context: Context) {
         manager.cancel(pendingIntent)
 
         Toast.makeText(context, "Alarm Canceled", Toast.LENGTH_SHORT).show()
-        Timber.d("Alarm Canceled")
+        Timber.i("Dispatch canceled")
     }
 }
 
+class LocationDispatchIntentReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        Timber.i("Dispatch intent received")
+        LocationDispatcher(context!!).dispatch()
+    }
+}
