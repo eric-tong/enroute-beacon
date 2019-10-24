@@ -1,8 +1,7 @@
 package dev.enroute.beacon.helper
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
@@ -50,14 +49,9 @@ class LocationHelper
         criteria.verticalAccuracy = Criteria.ACCURACY_HIGH
     }
 
+    @SuppressLint("MissingPermission")
     fun fetchLocationOnce() {
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        locationManager.requestSingleUpdate(criteria, locationListener!!, looper)
+        if (hasLocationPermissions(context))
+            locationManager.requestSingleUpdate(criteria, locationListener!!, looper)
     }
 }
