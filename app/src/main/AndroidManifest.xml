@@ -18,6 +18,8 @@
         tools:ignore="GoogleAppIndexingWarning"
         android:fullBackupContent="@xml/backup_descriptor">
 
+        <receiver android:name="dev.enroute.beacon.helper.Receiver" />
+
         <activity android:name="dev.enroute.beacon.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

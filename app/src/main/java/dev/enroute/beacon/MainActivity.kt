@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.enroute.beacon.R
 import dev.enroute.beacon.api.PlatformService
 import dev.enroute.beacon.helper.LocationHelper
+import dev.enroute.beacon.helper.Scheduler
 import dev.enroute.beacon.helper.hasLocationPermissions
 import dev.enroute.beacon.helper.requestLocationPermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,8 +26,17 @@ class MainActivity : AppCompatActivity() {
                 ) { location -> helloWorld.text = location.toString() }
             }
 
-        sendButton.setOnClickListener {
-            locationHelper.fetchLocationOnce()
+        val scheduler = Scheduler(this)
+
+
+        startButton.setOnClickListener {
+            // locationHelper.fetchLocationOnce()
+            scheduler.start(this)
+        }
+
+        endButton.setOnClickListener {
+            // locationHelper.fetchLocationOnce()
+            scheduler.stop(this)
         }
     }
 }
